@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medicine Reminder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="card">
+      <div class="top-nav">
+        <div class="nav-title">Medicine Reminder</div>
+        <div class="nav-items">
+          <span class="nav-info">Track doses, stay on time, and keep your medicine schedule organized.</span>
+        </div>
+      </div>
+
+      <div id="home-screen" class="screen">
+        <h1>Welcome to Medicine Reminder</h1>
+        <p class="home-description">This site helps you schedule medicine doses, manage reminders, and keep track of treatment times. Use the login page for full access, or continue as a guest to learn why on-time medication is important.</p>
+        <div class="button-row">
+          <button id="home-login-button" class="secondary">Login</button>
+          <button id="home-guest-button" class="secondary">Guest View</button>
+        </div>
+      </div>
+
+      <div id="login-screen" class="screen hidden">
+        <h1>Medicine Reminder</h1>
+        <div class="field-row">
+          <label for="username">Username</label>
+          <input id="username" type="text" autocomplete="username">
+        </div>
+        <div class="field-row">
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password">
+        </div>
+        <div class="button-row">
+          <button id="login-button">Login</button>
+          <button id="register-button" class="secondary">Register</button>
+          <button id="guest-button" class="secondary">Guest View</button>
+        </div>
+        <p class="hint">Create a new account or sign in with an existing one.</p>
+      </div>
+
+      <div id="register-screen" class="screen hidden">
+        <h1>Create Account</h1>
+        <div class="field-row">
+          <label for="new-username">Choose Username</label>
+          <input id="new-username" type="text" autocomplete="username">
+        </div>
+        <div class="field-row">
+          <label for="new-password">Choose Password</label>
+          <input id="new-password" type="password" autocomplete="new-password">
+        </div>
+        <div class="button-row">
+          <button id="create-account-button">Create Account</button>
+          <button id="back-to-login-button" class="secondary">Back to Login</button>
+        </div>
+        <p class="hint">Your account is stored locally in this browser.</p>
+      </div>
+
+      <div id="dashboard-screen" class="screen hidden">
+        <h1>Dashboard</h1>
+        <div class="info-box">
+          <p id="welcome-text"></p>
+          <p id="summary-text"></p>
+        </div>
+        <div id="guest-info" class="info-box hidden">
+          <p><strong>Why on-time medicine matters</strong></p>
+          <p>Taking medicine at the right time helps maintain steady levels in your body, improves treatment effectiveness, and reduces the risk of missed doses or side effects.</p>
+          <p>Guest mode is read-only: you can view important information about proper medicine timing, but you cannot add or edit reminders.</p>
+        </div>
+        <div id="medicines-list" class="table-wrapper">
+          <h2>Your Medicines</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Medicine</th>
+                <th>Dose/Notes</th>
+                <th>Time</th>
+                <th>Days</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-medicines-body"></tbody>
+          </table>
+        </div>
+        <div class="button-row">
+          <button id="add-medicine-button">Add Medicine</button>
+          <button id="view-reminders-button" class="secondary">View Reminders</button>
+          <button id="logout-button" class="secondary">Logout</button>
+        </div>
+      </div>
+
+      <div id="form-screen" class="screen hidden">
+        <h1 id="form-title">Add Medicine</h1>
+        <div class="field-row">
+          <label for="medicine-name">Medicine Name</label>
+          <input id="medicine-name" type="text" placeholder="Vitamin D">
+        </div>
+        <div class="field-row">
+          <label for="medicine-dose">Dose / Notes</label>
+          <input id="medicine-dose" type="text" placeholder="One tablet">
+        </div>
+        <div class="field-row">
+          <label for="medicine-time">Time</label>
+          <div class="time-entry-row">
+            <input id="medicine-time" type="text" placeholder="08:00" autocomplete="off">
+            <select id="medicine-ampm" aria-label="AM or PM">
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <label>Days</label>
+          <div class="day-checkbox-row">
+            <label><input type="checkbox" class="day-checkbox" value="Mon"> Mon</label>
+            <label><input type="checkbox" class="day-checkbox" value="Tue"> Tue</label>
+            <label><input type="checkbox" class="day-checkbox" value="Wed"> Wed</label>
+            <label><input type="checkbox" class="day-checkbox" value="Thu"> Thu</label>
+            <label><input type="checkbox" class="day-checkbox" value="Fri"> Fri</label>
+            <label><input type="checkbox" class="day-checkbox" value="Sat"> Sat</label>
+            <label><input type="checkbox" class="day-checkbox" value="Sun"> Sun</label>
+          </div>
+        </div>
+        <div class="button-row">
+          <button id="save-button">Save</button>
+          <button id="cancel-button" class="secondary">Cancel</button>
+        </div>
+        <p id="form-error" class="error hidden"></p>
+      </div>
+
+      <div id="reminders-screen" class="screen hidden">
+        <h1>Reminders</h1>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Medicine</th>
+                <th>Dose/Notes</th>
+                <th>Time</th>
+                <th>Days</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="reminder-table-body"></tbody>
+          </table>
+        </div>
+        <div class="button-row">
+          <button id="refresh-button">Refresh</button>
+          <button id="back-dashboard-button" class="secondary">Back to Dashboard</button>
+        </div>
+      </div>
+
+      <!-- Medicine Alert Popup Modal -->
+      <div id="medicine-alert-modal" class="modal hidden">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Medicine Reminder</h2>
+          </div>
+          <div class="modal-body">
+            <p id="modal-alert-text">Time to take your medicine!</p>
+          </div>
+          <div class="modal-footer">
+            <button id="modal-ok-button" onclick="handleModalOkButton()">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
