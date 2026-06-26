@@ -87,6 +87,4 @@ No installation or server is required.
 **Charan Y**
 MCA Student | Web Development | JavaScript | Cybersecurity Enthusiast
 
-
-
-GitHub: https://github.com/ycharan234-collab
+This project is developed for educational and learning purposes.
